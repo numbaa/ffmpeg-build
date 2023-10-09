@@ -30,6 +30,6 @@ jobs:
           export PATH=$PATH:$GITHUB_WORKSPACE/yasm
           cd ffmpeg
           chmod +x ./configure
-          ./configure --disable-debug --enable-asm --enable-yasm --target-os=win64 --arch=x86_64 --toolchain=msvc --enable-small --disable-programs --disable-doc --disable-avdevice  --disable-swscale --disable-postproc --disable-avfilter --disable-avformat --enable-shared --disable-muxers --prefix=./install && make -j2 && make install
+          ./configure --disable-debug --enable-asm --enable-yasm --target-os=win64 --arch=x86_64 --toolchain=msvc --enable-small --disable-programs --disable-doc --disable-avdevice  --disable-swscale --disable-postproc --disable-avfilter --disable-avformat --enable-shared --disable-muxers --prefix=./install && make && make install
 
       
