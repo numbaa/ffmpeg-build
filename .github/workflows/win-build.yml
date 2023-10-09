@@ -27,6 +27,7 @@ jobs:
         shell: msys2 {0}
         run: |
           export PATH=$PATH:$GITHUB_WORKSPACE/yasm
+          pacman -S make
           cd ffmpeg
           chmod +x ./configure
           ./configure --disable-debug --enable-asm --enable-yasm --target-os=win64 --arch=x86_64 --toolchain=msvc --enable-small --disable-programs --disable-doc --disable-avdevice  --disable-swscale --disable-postproc --disable-avfilter --disable-avformat --enable-shared --disable-muxers --prefix=./install && make -j2 && make install
