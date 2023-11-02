@@ -77,8 +77,6 @@ jobs:
           cp Release.txt ./ffmpeg/install
           cp ffmpeg-build/CMakeLists.txt ./ffmpeg/install
           tar -czvf ffmpeg.linux.${{ github.ref_name }}.tar.gz -C ./ffmpeg/install .
-          ls -al ./ffmpeg/install
-          ls -al ./ffmpeg/install/lib
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
