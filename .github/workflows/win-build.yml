@@ -1,12 +1,12 @@
-name: Windows
+name: Build
 on: workflow_dispatch
 jobs:
-  build:
+  Windows:
     permissions:
       contents: write
     runs-on: windows-2022
     steps:
-      - name: Checkout repo
+      - name: Checkout
         uses: actions/checkout@v4
         with:
           path: ffmpeg-build
@@ -31,16 +31,57 @@ jobs:
         run: |
           cd ffmpeg
           chmod +x ./configure
-          ./configure --prefix=./install --enable-shared --disable-debug --disable-protocols --enable-asm --enable-yasm --target-os=win64 --arch=x86_64 --toolchain=msvc --disable-gpl --disable-programs --disable-doc --disable-avdevice --disable-swresample  --disable-swscale --disable-postproc --disable-avfilter --disable-filters --disable-devices --disable-demuxers --disable-muxers --disable-avformat
+          ./configure --prefix=./install --enable-shared --disable-debug --disable-protocols --enable-asm --enable-x86asm --target-os=win64 --arch=x86_64 --toolchain=msvc --disable-gpl --disable-programs --disable-doc --disable-avdevice --disable-swresample  --disable-swscale --disable-postproc --disable-avfilter --disable-filters --disable-devices --disable-demuxers --disable-muxers --disable-avformat
           make -j2
           make install
       - name: Generate zip
         run: |
           echo ${{ github.sha }} > Release.txt
-          Compress-Archive -Path ./ffmpeg/install/*,./Release.txt,./ffmpeg-build/CMakeLists.txt -DestinationPath ffmpeg.zip
+          Compress-Archive -Path ./ffmpeg/install/*,./Release.txt,./ffmpeg-build/CMakeLists.txt -DestinationPath ffmpeg.win.${{ github.ref_name }}.zip
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          files: ffmpeg.zip
+          files: ffmpeg.win.${{ github.ref_name }}.zip
+
+  Linux:
+    permissions:
+      contents: write
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          path: ffmpeg-build
+      - name: Checkout ffmpeg
+        uses: actions/checkout@v4
+        with:
+          repository: FFmpeg/FFmpeg
+          ref: n5.1.3
+          path: ffmpeg
+      - name: Install deps
+        run: |
+          sudo apt-get -y install gcc-10 g++-10 yasm
+          alias gcc='gcc-10'
+          alias g++='g++-10'
+          export CC=`which gcc-10`
+          export CXX=`which gcc-10`
+      - name: Build
+        run: |
+          cd ffmpeg
+          ./configure --prefix=./install --enable-shared --disable-debug --disable-protocols --enable-asm --enable-x86asm --target-os=linux --arch=x86_64 --disable-gpl --disable-programs --disable-doc --disable-avdevice --disable-swresample  --disable-swscale --disable-postproc --disable-avfilter --disable-filters --disable-devices --disable-demuxers --disable-muxers --disable-avformat --cc=gcc-10 --cxx=g++-10
+          make -j2
+          make install
+      - name: Generate tar
+        run: |
+          echo ${{ github.sha }} > Release.txt
+          cp Release.txt ./ffmpeg/install
+          cp ffmpeg-build/CMakeLists.txt ./ffmpeg/install
+          tar -czvf ffmpeg.linux.${{ github.ref_name }}.tar.gz -C ./ffmpeg/install .
+          ls -al ./ffmpeg/install
+          ls -al ./ffmpeg/install/lib
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ffmpeg.linux.${{ github.ref_name }}.tar.gz
 
       
