@@ -68,7 +68,7 @@ jobs:
         run: |
           sudo apt-get clean
           sudo apt-get update
-          sudo apt-get -y install gcc-10 g++-10 yasm libmfx-dev
+          sudo apt-get -y install gcc-10 g++-10 yasm libmfx-dev libva-dev libvdpau-dev
       - name: Build
         run: |
           alias gcc='gcc-10'
@@ -81,7 +81,7 @@ jobs:
           export C_INCLUDE_PATH=${{ github.workspace }}/xinclude
           export CPLUS_INCLUDE_PATH=${{ github.workspace }}/xinclude
           cd ffmpeg
-          ./configure --prefix=./install --enable-shared --enable-amf --enable-libmfx --disable-debug --disable-protocols --enable-asm --enable-x86asm --target-os=linux --arch=x86_64 --disable-gpl --disable-programs --disable-doc --disable-avdevice --disable-swresample  --disable-swscale --disable-postproc --disable-avfilter --disable-filters --disable-devices --disable-demuxers --disable-muxers --disable-avformat --cc=gcc-10 --cxx=g++-10
+          ./configure --prefix=./install --enable-shared --enable-amf --enable-libmfx --enable-vdpau --enable-vaapi --disable-debug --disable-protocols --enable-asm --enable-x86asm --target-os=linux --arch=x86_64 --disable-gpl --disable-programs --disable-doc --disable-avdevice --disable-swresample  --disable-swscale --disable-postproc --disable-avfilter --disable-filters --disable-devices --disable-demuxers --disable-muxers --disable-avformat --cc=gcc-10 --cxx=g++-10
           make -j2
           make install
       - name: Generate tar
