@@ -121,10 +121,10 @@ jobs:
           echo ${{ github.sha }} > Release.txt
           cp Release.txt ./ffmpeg/install
           cp ffmpeg-build/CMakeLists.txt ./ffmpeg/install
-          tar -czvf ffmpeg.macos.${{ github.ref_name }}.tar.gz -C ./ffmpeg/install .
+          tar -czvf ffmpeg.mac.${{ github.ref_name }}.tar.gz -C ./ffmpeg/install .
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          files: ffmpeg.macos.${{ github.ref_name }}.tar.gz
+          files: ffmpeg.mac.${{ github.ref_name }}.tar.gz
 
       
