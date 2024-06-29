@@ -113,7 +113,7 @@ jobs:
       - name: Build
         run: |
           cd ffmpeg
-          ./configure --prefix=./install --enable-shared --disable-debug --disable-protocols --enable-asm --disable-gpl --disable-programs --disable-doc --disable-avdevice --disable-swscale --disable-postproc --disable-avfilter --disable-filters --disable-devices --disable-demuxers --disable-muxers --disable-avformat
+          ./configure --prefix=./install --enable-shared --disable-debug --disable-xlib --disable-protocols --enable-asm --disable-gpl --disable-programs --disable-doc --disable-avdevice --disable-swscale --disable-postproc --disable-avfilter --disable-filters --disable-devices --disable-demuxers --disable-muxers --disable-avformat
           make -j3
           make install
       - name: Generate tar
