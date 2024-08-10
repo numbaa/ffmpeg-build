@@ -31,7 +31,7 @@ jobs:
         run: |
           cd ffmpeg
           chmod +x ./configure
-          ./configure --prefix=./install --enable-shared --disable-debug --disable-protocols --enable-asm --enable-x86asm --target-os=win64 --arch=x86_64 --toolchain=msvc --disable-gpl --disable-programs --disable-doc --disable-avdevice --disable-swscale --disable-postproc --disable-avfilter --disable-filters --disable-devices --disable-demuxers --disable-muxers --disable-avformat
+          ./configure --prefix=./install --disable-debug --disable-protocols --enable-asm --enable-x86asm --target-os=win64 --arch=x86_64 --toolchain=msvc --disable-gpl --disable-programs --disable-doc --disable-avdevice --disable-swscale --disable-postproc --disable-avfilter --disable-filters --disable-devices --disable-demuxers --disable-muxers --disable-avformat
           make -j2
           make install
       - name: Generate zip
