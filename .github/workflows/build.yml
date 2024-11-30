@@ -31,7 +31,7 @@ jobs:
         run: |
           cd ffmpeg
           chmod +x ./configure
-          ./configure --prefix=./install --enable-shared --disable-debug --disable-all --enable-asm --enable-x86asm --target-os=win64 --arch=x86_64 --toolchain=msvc --disable-gpl --enable-avcodec --enable-swscale --enable-decoder=h264 --enable-decoder=hevc --enable-hwaccel=h264_dxva2 --enable-hwaccel=hevc_dxva2 --enable-hwaccel=h264_d3d11va --enable-hwaccel=hevc_d3d11va --enable-hwaccel=h264_d3d11va2 --enable-hwaccel=hevc_d3d11va2
+          ./configure --prefix=./install --enable-shared --disable-debug --disable-all --enable-asm --enable-x86asm --target-os=win64 --arch=x86_64 --toolchain=msvc --disable-gpl --enable-avcodec --enable-swresample --enable-decoder=h264 --enable-decoder=hevc --enable-hwaccel=h264_dxva2 --enable-hwaccel=hevc_dxva2 --enable-hwaccel=h264_d3d11va --enable-hwaccel=hevc_d3d11va --enable-hwaccel=h264_d3d11va2 --enable-hwaccel=hevc_d3d11va2
           make -j2
           make install
       - name: Generate zip
